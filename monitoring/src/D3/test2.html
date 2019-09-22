@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+</style>
+<body>
+
+<!-- load the d3.js library -->    	
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+// set the dimensions and margins of the graph
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+
+var parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S.000+0000");
+
+// set the ranges
+var x = d3.scaleTime().range([0, width]);
+var y = d3.scaleLinear().range([height, 0]);
+
+// define the line
+var valueline = d3.line()
+    .x(function(d) { return x(d.requestedTime); })
+    .y(function(d) { return y(d.intuitResponseTime); });
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Get the data
+d3.csv("./data.csv", function(error, data) {
+ // if (error) throw error;
+
+    let datas = [
+    {
+        "id": 7,
+        "requestedTime": "2019-09-15T09:09:51.000+0000",
+        "wikiResponseTime": 132,
+        "intuitResponseTime": 398
+    },
+    {
+        "id": 8,
+        "requestedTime": "2019-09-15T09:09:51.000+0000",
+        "wikiResponseTime": 204,
+        "intuitResponseTime": 417
+    },
+    {
+        "id": 9,
+        "requestedTime": "2019-09-15T09:09:52.000+0000",
+        "wikiResponseTime": 47,
+        "intuitResponseTime": 461
+    },
+    {
+        "id": 10,
+        "requestedTime": "2019-09-15T09:09:52.000+0000",
+        "wikiResponseTime": 49,
+        "intuitResponseTime": 388
+    },
+    {
+        "id": 11,
+        "requestedTime": "2019-09-15T09:09:53.000+0000",
+        "wikiResponseTime": 47,
+        "intuitResponseTime": 387
+    },
+    {
+        "id": 12,
+        "requestedTime": "2019-09-15T09:11:11.000+0000",
+        "wikiResponseTime": 48,
+        "intuitResponseTime": 404
+    },
+    {
+        "id": 13,
+        "requestedTime": "2019-09-15T09:11:12.000+0000",
+        "wikiResponseTime": 49,
+        "intuitResponseTime": 367
+    },
+    {
+        "id": 14,
+        "requestedTime": "2019-09-15T09:11:15.000+0000",
+        "wikiResponseTime": 58,
+        "intuitResponseTime": 414
+    },
+    {
+        "id": 15,
+        "requestedTime": "2019-09-15T09:11:16.000+0000",
+        "wikiResponseTime": 48,
+        "intuitResponseTime": 369
+    },
+    {
+        "id": 16,
+        "requestedTime": "2019-09-15T09:12:19.000+0000",
+        "wikiResponseTime": 46,
+        "intuitResponseTime": 458
+    },
+    {
+        "id": 17,
+        "requestedTime": "2019-09-15T09:12:20.000+0000",
+        "wikiResponseTime": 47,
+        "intuitResponseTime": 418
+    },
+    {
+        "id": 18,
+        "requestedTime": "2019-09-15T09:12:37.000+0000",
+        "wikiResponseTime": 48,
+        "intuitResponseTime": 1189
+    },
+    {
+        "id": 19,
+        "requestedTime": "2019-09-15T09:12:38.000+0000",
+        "wikiResponseTime": 48,
+        "intuitResponseTime": 360
+    },
+    {
+        "id": 20,
+        "requestedTime": "2019-09-15T09:15:44.000+0000",
+        "wikiResponseTime": 126,
+        "intuitResponseTime": 399
+    },
+    {
+        "id": 21,
+        "requestedTime": "2019-09-15T09:15:45.000+0000",
+        "wikiResponseTime": 54,
+        "intuitResponseTime": 353
+    },
+    {
+        "id": 22,
+        "requestedTime": "2019-09-15T09:16:41.000+0000",
+        "wikiResponseTime": 47,
+        "intuitResponseTime": 411
+    },
+    {
+        "id": 23,
+        "requestedTime": "2019-09-15T09:19:01.000+0000",
+        "wikiResponseTime": 136,
+        "intuitResponseTime": 962
+    },
+    {
+        "id": 24,
+        "requestedTime": "2019-09-15T09:20:25.000+0000",
+        "wikiResponseTime": 50,
+        "intuitResponseTime": 408
+    },
+    {
+        "id": 25,
+        "requestedTime": "2019-09-15T09:20:25.000+0000",
+        "wikiResponseTime": 49,
+        "intuitResponseTime": 293
+    },
+    {
+        "id": 26,
+        "requestedTime": "2019-09-15T09:20:48.000+0000",
+        "wikiResponseTime": 46,
+        "intuitResponseTime": 446
+    },
+    {
+        "id": 27,
+        "requestedTime": "2019-09-15T09:20:49.000+0000",
+        "wikiResponseTime": 47,
+        "intuitResponseTime": 405
+    },
+    {
+        "id": 28,
+        "requestedTime": "2019-09-15T09:21:53.000+0000",
+        "wikiResponseTime": 48,
+        "intuitResponseTime": 408
+    },
+    {
+        "id": 29,
+        "requestedTime": "2019-09-15T09:21:53.000+0000",
+        "wikiResponseTime": 46,
+        "intuitResponseTime": 395
+    },
+    {
+        "id": 30,
+        "requestedTime": "2019-09-15T09:22:23.000+0000",
+        "wikiResponseTime": 46,
+        "intuitResponseTime": 327
+    },
+    {
+        "id": 31,
+        "requestedTime": "2019-09-15T09:22:23.000+0000",
+        "wikiResponseTime": 46,
+        "intuitResponseTime": 321
+    },
+    {
+        "id": 32,
+        "requestedTime": "2019-09-15T09:22:30.000+0000",
+        "wikiResponseTime": 47,
+        "intuitResponseTime": 382
+    },
+    {
+        "id": 33,
+        "requestedTime": "2019-09-15T09:22:30.000+0000",
+        "wikiResponseTime": 47,
+        "intuitResponseTime": 359
+    },
+    {
+        "id": 34,
+        "requestedTime": "2019-09-15T09:22:35.000+0000",
+        "wikiResponseTime": 51,
+        "intuitResponseTime": 324
+    },
+    {
+        "id": 35,
+        "requestedTime": "2019-09-15T09:22:36.000+0000",
+        "wikiResponseTime": 47,
+        "intuitResponseTime": 404
+    },
+    {
+        "id": 36,
+        "requestedTime": "2019-09-15T09:22:56.000+0000",
+        "wikiResponseTime": 46,
+        "intuitResponseTime": 384
+    },
+    {
+        "id": 37,
+        "requestedTime": "2019-09-15T09:22:56.000+0000",
+        "wikiResponseTime": 46,
+        "intuitResponseTime": 417
+    },
+    {
+        "id": 38,
+        "requestedTime": "2019-09-15T09:23:17.000+0000",
+        "wikiResponseTime": 45,
+        "intuitResponseTime": 397
+    },
+    {
+        "id": 39,
+        "requestedTime": "2019-09-15T09:23:18.000+0000",
+        "wikiResponseTime": 47,
+        "intuitResponseTime": 328
+    },
+    {
+        "id": 40,
+        "requestedTime": "2019-09-15T09:23:38.000+0000",
+        "wikiResponseTime": 44,
+        "intuitResponseTime": 418
+    },
+    {
+        "id": 41,
+        "requestedTime": "2019-09-15T09:23:38.000+0000",
+        "wikiResponseTime": 47,
+        "intuitResponseTime": 399
+    },
+    {
+        "id": 42,
+        "requestedTime": "2019-09-15T09:23:44.000+0000",
+        "wikiResponseTime": 47,
+        "intuitResponseTime": 451
+    },
+    {
+        "id": 43,
+        "requestedTime": "2019-09-15T09:23:45.000+0000",
+        "wikiResponseTime": 48,
+        "intuitResponseTime": 368
+    }
+];
+
+  // format the data
+  datas.forEach(function(d) {
+      d.requestedTime = parseTime(d.requestedTime);
+      d.intuitResponseTime = +d.intuitResponseTime;
+  });
+
+
+
+  // Scale the range of the data
+  x.domain(d3.extent(datas, function(d) { return d.requestedTime; }));
+  y.domain([0, d3.max(datas, function(d) { return d.intuitResponseTime; })]);
+
+  // Add the valueline path.
+  svg.append("path")
+      .data([datas])
+      .attr("class", "line")
+      .attr("d", valueline);
+
+  // Add the X Axis
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+  // Add the Y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
+
+});
+</script>
+</body>
